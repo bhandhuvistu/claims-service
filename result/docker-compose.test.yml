@@ -13,7 +13,8 @@ services:
 
   health-insurance-system:
     build: ../health-insurance-system/
-    ports: ["80"]
+    ports:
+      - "8080:80"
     depends_on:
       - redis
       - db
@@ -23,7 +24,8 @@ services:
 
   claims-service:
     build: .
-    ports: ["80"]
+    ports:
+      - "8081:80"
     depends_on:
       - redis
       - db
@@ -50,16 +52,11 @@ services:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "postgres"
     volumes:
-      - "db-data:/var/lib/postgresql/data"
+      - db-data:/var/lib/postgresql/data
     networks:
       - back-tier
 
 volumes:
-  db-data:
-
-networks:
-  front-tier:
-  back-tier:
   db-data:
 
 networks:
