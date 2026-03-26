@@ -5,14 +5,14 @@ services:
   sut:
     build: ./tests/
     depends_on:
-      - vote
-      - result
-      - worker
+      - health-insurance-system
+      - claims-service
+      - policy-service
     networks:
       - front-tier
 
-  vote:
-    build: ../vote/
+  health-insurance-system:
+    build: ../health-insurance-system/
     ports: ["80"]
     depends_on:
       - redis
@@ -21,7 +21,7 @@ services:
       - front-tier
       - back-tier
 
-  result:
+  claims-service:
     build: .
     ports: ["80"]
     depends_on:
@@ -31,8 +31,8 @@ services:
       - front-tier
       - back-tier
 
-  worker:
-    build: ../worker/
+  policy-service:
+    build: ../policy-service/
     depends_on:
       - redis
       - db
@@ -55,6 +55,11 @@ services:
       - back-tier
 
 volumes:
+  db-data:
+
+networks:
+  front-tier:
+  back-tier:
   db-data:
 
 networks:
